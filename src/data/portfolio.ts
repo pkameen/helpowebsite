@@ -6,6 +6,7 @@ export type PortfolioItem = {
   category: PortfolioCategory;
   description: string;
   image: string;
+  href?: string; 
 };
 
 export const portfolioItems: PortfolioItem[] = [
