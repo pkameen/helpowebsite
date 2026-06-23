@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Globe,
   MonitorSmartphone,
@@ -8,6 +9,7 @@ import {
   Database,
   LayoutDashboard,
   Smartphone,
+  ChevronDown,
 } from "lucide-react";
 
 const services = [
@@ -72,39 +74,111 @@ const cardVariants = {
 };
 
 export default function Services() {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  const toggleAccordion = (index: number) => {
+    setOpenIndex((prev) => (prev === index ? null : index));
+  };
+
   return (
-    <section id="services" className="py-28 md:py-32">
-      <div className="container-custom">
+    <section id="services" className="relative py-18 sm:py-22 lg:py-28">
+      {/* subtle background glow */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute left-[-8%] top-10 h-56 w-56 rounded-full bg-blue-500/8 blur-3xl" />
+        <div className="absolute right-[-10%] bottom-0 h-64 w-64 rounded-full bg-cyan-400/8 blur-3xl" />
+      </div>
+
+      <div className="container-custom relative z-10">
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="max-w-3xl mx-auto text-center mb-14 md:mb-16"
+          className="mx-auto mb-10 max-w-3xl text-center sm:mb-12 lg:mb-14"
         >
-          <p className="text-blue-400 uppercase tracking-[0.25em] text-xs md:text-sm mb-4">
+          <p className="mb-3 text-[11px] uppercase tracking-[0.24em] text-blue-400 sm:mb-4 sm:text-xs md:text-sm">
             Our Services
           </p>
 
-          <h2 className="text-3xl md:text-5xl font-bold leading-tight text-white">
+          <h2 className="text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-4xl xl:text-5xl">
             Premium Digital Solutions for Modern Businesses
           </h2>
 
-          <p className="text-slate-400 mt-5 text-sm md:text-base leading-7">
+          <p className="mt-4 text-sm leading-7 text-slate-400 sm:mt-5 sm:text-base">
             HELPO builds premium websites, business software, ecommerce systems,
             ERP platforms, and digital products that help brands grow with
             clarity, performance, and trust.
           </p>
         </motion.div>
 
-        {/* Cards */}
+        {/* =========================
+            MOBILE / TABLET ACCORDION
+        ========================= */}
+        <div className="space-y-3 lg:hidden">
+          {services.map((service, index) => {
+            const Icon = service.icon;
+            const isOpen = openIndex === index;
+
+            return (
+              <div
+                key={service.title}
+                className="overflow-hidden rounded-[1.35rem] border border-white/10 bg-white/[0.045] backdrop-blur-sm"
+              >
+                <button
+                  type="button"
+                  onClick={() => toggleAccordion(index)}
+                  className="flex w-full items-center justify-between gap-3 px-4 py-4 text-left"
+                >
+                  <div className="flex min-w-0 items-center gap-3">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-blue-500/20 bg-blue-500/10 text-blue-400 shadow-[0_0_30px_rgba(59,130,246,0.10)]">
+                      <Icon className="h-5 w-5" />
+                    </div>
+
+                    <h3 className="text-sm font-semibold leading-6 text-white sm:text-base">
+                      {service.title}
+                    </h3>
+                  </div>
+
+                  <ChevronDown
+                    className={`h-5 w-5 shrink-0 text-slate-400 transition-transform duration-300 ${
+                      isOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      key="content"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.28, ease: "easeOut" }}
+                      className="overflow-hidden"
+                    >
+                      <div className="border-t border-white/10 px-4 pb-4 pt-3">
+                        <p className="text-sm leading-7 text-slate-400">
+                          {service.description}
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* =========================
+            DESKTOP FULL CARDS
+        ========================= */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.15 }}
-          className="grid gap-6 md:gap-8 md:grid-cols-2 xl:grid-cols-3"
+          className="hidden gap-6 md:grid md:grid-cols-2 lg:gap-6 xl:grid-cols-3"
         >
           {services.map((service) => {
             const Icon = service.icon;
@@ -113,13 +187,13 @@ export default function Services() {
               <motion.article
                 key={service.title}
                 variants={cardVariants}
-                className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-7 md:p-8 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-500/30 hover:bg-white/[0.07]"
+                className="group relative overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/[0.045] p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-500/30 hover:bg-white/[0.07] xl:p-7"
               >
                 {/* glow */}
-                <div className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.16),transparent_40%)]" />
+                <div className="pointer-events-none absolute inset-0 rounded-[1.6rem] bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.16),transparent_42%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
                 <div className="relative z-10">
-                  <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-blue-500/20 bg-blue-500/10 text-blue-400 shadow-[0_0_30px_rgba(59,130,246,0.12)]">
+                  <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-blue-500/20 bg-blue-500/10 text-blue-400 shadow-[0_0_30px_rgba(59,130,246,0.12)]">
                     <Icon className="h-6 w-6" />
                   </div>
 
@@ -127,12 +201,12 @@ export default function Services() {
                     {service.title}
                   </h3>
 
-                  <p className="mt-4 text-sm leading-7 text-slate-400">
+                  <p className="mt-3 text-sm leading-7 text-slate-400">
                     {service.description}
                   </p>
                 </div>
 
-                <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-transparent transition-all duration-300 group-hover:ring-blue-500/30 group-hover:shadow-[0_0_40px_rgba(59,130,246,0.10)]" />
+                <div className="pointer-events-none absolute inset-0 rounded-[1.6rem] ring-1 ring-transparent transition-all duration-300 group-hover:ring-blue-500/30 group-hover:shadow-[0_0_40px_rgba(59,130,246,0.10)]" />
               </motion.article>
             );
           })}

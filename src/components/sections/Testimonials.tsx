@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Quote } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Quote, ChevronDown } from "lucide-react";
 
 const testimonials = [
   {
@@ -62,39 +63,117 @@ const cardVariants = {
 };
 
 export default function Testimonials() {
+  const [openName, setOpenName] = useState<string | null>(null);
+
+  const toggleAccordion = (name: string) => {
+    setOpenName((prev) => (prev === name ? null : name));
+  };
+
   return (
-    <section id="testimonials" className="py-28 md:py-32">
-      <div className="container-custom">
+    <section id="testimonials" className="relative py-18 sm:py-22 lg:py-28">
+      {/* background glow */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute left-[-8%] top-10 h-56 w-56 rounded-full bg-blue-500/8 blur-3xl" />
+        <div className="absolute right-[-10%] bottom-0 h-64 w-64 rounded-full bg-cyan-400/8 blur-3xl" />
+      </div>
+
+      <div className="container-custom relative z-10">
         {/* Heading */}
         <motion.div
           variants={headingVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
-          className="max-w-3xl mx-auto text-center mb-14 md:mb-16"
+          className="mx-auto mb-10 max-w-3xl text-center sm:mb-12 lg:mb-14"
         >
-          <p className="text-blue-400 uppercase tracking-[0.25em] text-xs md:text-sm mb-4">
+          <p className="mb-3 text-[11px] uppercase tracking-[0.24em] text-blue-400 sm:mb-4 sm:text-xs md:text-sm">
             Testimonials
           </p>
 
-          <h2 className="text-3xl md:text-5xl font-bold leading-tight text-white">
+          <h2 className="text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-4xl xl:text-5xl">
             What Clients Say About Working With HELPO
           </h2>
 
-          <p className="text-slate-400 mt-5 text-sm md:text-base leading-7">
+          <p className="mt-4 text-sm leading-7 text-slate-400 sm:mt-5 sm:text-base">
             We focus on premium execution, clear communication, and building
             digital solutions that genuinely help businesses grow with
             confidence.
           </p>
         </motion.div>
 
-        {/* Cards */}
+        {/* =========================
+            MOBILE / TABLET ACCORDION
+        ========================= */}
+        <div className="space-y-4 lg:hidden">
+          {testimonials.map((item) => {
+            const isOpen = openName === item.name;
+
+            return (
+              <div
+                key={item.name}
+                className="overflow-hidden rounded-[1.45rem] border border-white/10 bg-white/[0.045] backdrop-blur-sm"
+              >
+                <button
+                  type="button"
+                  onClick={() => toggleAccordion(item.name)}
+                  className="flex w-full items-center justify-between gap-4 px-4 py-4 text-left"
+                >
+                  <div className="flex min-w-0 items-center gap-4">
+                    <div className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-blue-500/20 bg-blue-500/10 text-blue-400 shadow-[0_0_30px_rgba(59,130,246,0.12)]">
+                      <Quote className="h-5 w-5" />
+                    </div>
+
+                    <div className="min-w-0">
+                      <h3 className="truncate text-base font-semibold text-white">
+                        {item.name}
+                      </h3>
+                      <p className="mt-1 text-sm text-slate-400">
+                        {item.role} · {item.company}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div
+                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-[#07101d]/80 text-slate-300 backdrop-blur transition-transform duration-300 ${
+                      isOpen ? "rotate-180" : ""
+                    }`}
+                  >
+                    <ChevronDown className="h-5 w-5" />
+                  </div>
+                </button>
+
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      key="content"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                      className="overflow-hidden"
+                    >
+                      <div className="border-t border-white/10 px-4 pb-5 pt-4">
+                        <p className="text-sm leading-7 text-slate-300">
+                          “{item.review}”
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* =========================
+            DESKTOP GRID CARDS
+        ========================= */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.15 }}
-          className="grid gap-6 md:gap-8 md:grid-cols-2 xl:grid-cols-3"
+          className="hidden gap-6 md:grid lg:grid-cols-3"
         >
           {testimonials.map((item) => (
             <motion.article
@@ -110,7 +189,7 @@ export default function Testimonials() {
                   <Quote className="h-6 w-6" />
                 </div>
 
-                <p className="text-sm md:text-base leading-8 text-slate-300">
+                <p className="text-sm leading-8 text-slate-300 md:text-base">
                   “{item.review}”
                 </p>
 

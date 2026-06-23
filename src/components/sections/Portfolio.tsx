@@ -2,19 +2,13 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { portfolioItems, PortfolioCategory } from "../../data/portfolio";
 
 type FilterType = "All" | PortfolioCategory;
 
-const filters: FilterType[] = [
-  "All",
-  "Website", 
-  "Web App",
-  "Ecommerce",
-  "ERP",
-];
+const filters: FilterType[] = ["All", "Website", "Web App", "Ecommerce", "ERP"];
 
 const headingVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -52,32 +46,50 @@ const cardVariants = {
 
 export default function Portfolio() {
   const [activeFilter, setActiveFilter] = useState<FilterType>("All");
+  const [openId, setOpenId] = useState<string | null>(null);
 
   const filteredItems =
     activeFilter === "All"
       ? portfolioItems
       : portfolioItems.filter((item) => item.category === activeFilter);
+  
+  const mobileCategoryItems = [
+  portfolioItems.find((item) => item.category === "Website"),
+  portfolioItems.find((item) => item.category === "Web App"),
+  portfolioItems.find((item) => item.category === "Ecommerce"),
+  portfolioItems.find((item) => item.category === "ERP"),
+  ].filter(Boolean);
+
+  const toggleAccordion = (id: string) => {
+    setOpenId((prev) => (prev === id ? null : id));
+  };
 
   return (
-    <section id="portfolio" className="py-28 md:py-32">
-      <div className="container-custom">
+    <section id="portfolio" className="relative py-18 sm:py-22 lg:py-28">
+      {/* subtle background glow */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute left-[-8%] top-12 h-56 w-56 rounded-full bg-blue-500/8 blur-3xl" />
+        <div className="absolute right-[-10%] bottom-0 h-64 w-64 rounded-full bg-cyan-400/8 blur-3xl" />
+      </div>
+
+      <div className="container-custom relative z-10">
         {/* Heading */}
         <motion.div
           variants={headingVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
-          className="max-w-3xl mx-auto text-center mb-14 md:mb-16"
+          className="mx-auto mb-10 max-w-3xl text-center sm:mb-12 lg:mb-14"
         >
-          <p className="text-blue-400 uppercase tracking-[0.25em] text-xs md:text-sm mb-4">
+          <p className="mb-3 text-[11px] uppercase tracking-[0.24em] text-blue-400 sm:mb-4 sm:text-xs md:text-sm">
             Our Portfolio
           </p>
 
-          <h2 className="text-3xl md:text-5xl font-bold leading-tight text-white">
+          <h2 className="text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-4xl xl:text-5xl">
             Selected Projects & Digital Solutions
           </h2>
 
-          <p className="text-slate-400 mt-5 text-sm md:text-base leading-7">
+          <p className="mt-4 text-sm leading-7 text-slate-400 sm:mt-5 sm:text-base">
             Explore a selection of premium websites, web applications,
             ecommerce platforms, and ERP solutions crafted to elevate brands
             and business operations.
@@ -90,7 +102,7 @@ export default function Portfolio() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="flex flex-wrap items-center justify-center gap-3 mb-12 md:mb-14"
+          className="mb-8 flex flex-wrap items-center justify-center gap-2 sm:mb-10 sm:gap-3 lg:mb-12"
         >
           {filters.map((filter) => {
             const isActive = activeFilter === filter;
@@ -98,11 +110,14 @@ export default function Portfolio() {
             return (
               <button
                 key={filter}
-                onClick={() => setActiveFilter(filter)}
-                className={`px-5 md:px-6 py-3 rounded-full text-sm md:text-base font-medium transition-all duration-300 border ${
+                onClick={() => {
+                  setActiveFilter(filter);
+                  setOpenId(null);
+                }}
+                className={`rounded-full border px-4 py-2.5 text-sm font-medium transition-all duration-300 sm:px-5 sm:py-3 ${
                   isActive
-                    ? "bg-blue-600 text-white border-blue-500 shadow-[0_0_30px_rgba(59,130,246,0.25)]"
-                    : "bg-white/5 text-slate-300 border-white/10 hover:bg-white/10 hover:text-white"
+                    ? "border-blue-500 bg-blue-600 text-white shadow-[0_0_30px_rgba(59,130,246,0.25)]"
+                    : "border-white/10 bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white"
                 }`}
               >
                 {filter}
@@ -111,13 +126,104 @@ export default function Portfolio() {
           })}
         </motion.div>
 
-        {/* Cards Grid */}
+        {/* =========================
+            MOBILE / TABLET CATEGORY ACCORDION
+        ========================= */}
+        <div className="space-y-4 lg:hidden">
+          {mobileCategoryItems.map((item) => {
+            if (!item) return null;
+
+            const isOpen = openId === item.category;
+
+            return (
+              <div
+                key={item.category}
+                className="overflow-hidden rounded-[1.45rem] border border-white/10 bg-white/[0.045] backdrop-blur-sm"
+              >
+                <button
+                  type="button"
+                  onClick={() =>
+                    setOpenId((prev) => (prev === item.category ? null : item.category))
+                  }
+                  className="block w-full text-left"
+                >
+                  {/* top preview */}
+                  <div className="relative h-56 overflow-hidden">
+                    <Image
+                      src={item.image}
+                      alt={item.category}
+                      fill
+                      sizes="100vw"
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-[#050816]/45 to-transparent" />
+
+                    <div className="absolute left-4 top-4 z-10">
+                      <span className="inline-flex rounded-full border border-white/15 bg-black/30 px-3 py-1 text-[11px] font-medium text-white backdrop-blur-md">
+                        {item.category}
+                      </span>
+                    </div>
+
+                    <div className="absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-3 px-4 pb-4">
+                      <div className="min-w-0">
+                        <h3 className="text-lg font-semibold leading-snug text-white">
+                          {item.category}
+                        </h3>
+                      </div>
+
+                      <div
+                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-[#07101d]/80 text-slate-300 backdrop-blur transition-transform duration-300 ${
+                          isOpen ? "rotate-180" : ""
+                        }`}
+                      >
+                        <ChevronDown className="h-5 w-5" />
+                      </div>
+                    </div>
+                  </div>
+                </button>
+
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      key="content"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                      className="overflow-hidden"
+                    >
+                      <div className="border-t border-white/10 px-4 pb-5 pt-4">
+                        <p className="text-sm leading-7 text-slate-400">
+                          {item.description}
+                        </p>
+
+                        <div className="mt-5">
+                          <a
+                            href={item.href || "#"}
+                            className="inline-flex items-center gap-2 text-sm font-medium text-blue-400 transition-colors hover:text-blue-300"
+                          >
+                            View Project
+                            <ArrowUpRight className="h-4 w-4" />
+                          </a>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* =========================
+            DESKTOP GRID CARDS
+        ========================= */}
         <motion.div
           key={activeFilter}
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid gap-6 md:gap-8 md:grid-cols-2 xl:grid-cols-4"
+          className="hidden gap-6 md:grid md:grid-cols-2 xl:grid-cols-4"
         >
           {filteredItems.map((item) => (
             <motion.article
@@ -131,14 +237,14 @@ export default function Portfolio() {
                   src={item.image}
                   alt={item.title}
                   fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  sizes="(max-width: 1200px) 50vw, 25vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
 
                 <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-[#050816]/40 to-transparent" />
 
                 <div className="absolute left-4 top-4 z-10">
-                  <span className="inline-flex rounded-full border border-white/15 bg-black/30 backdrop-blur-md px-3 py-1 text-xs font-medium text-white">
+                  <span className="inline-flex rounded-full border border-white/15 bg-black/30 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
                     {item.category}
                   </span>
                 </div>
@@ -146,7 +252,7 @@ export default function Portfolio() {
 
               {/* Content */}
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-white leading-snug">
+                <h3 className="text-xl font-semibold leading-snug text-white">
                   {item.title}
                 </h3>
 
