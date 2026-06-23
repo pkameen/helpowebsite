@@ -33,10 +33,10 @@ export default function ServicesHero() {
         <div className="absolute bottom-[-120px] left-1/2 h-[260px] w-[70%] -translate-x-1/2 rounded-full bg-blue-500/10 blur-[120px]" />
       </div>
 
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="container-custom mx-auto max-w-7xl px-6">
         <div className="grid items-center gap-14 lg:grid-cols-[1.02fr_0.98fr]">
           {/* LEFT CONTENT */}
-          <div className="relative z-10">
+          <div className="relative pt-20 z-10">
             {/* badge */}
             <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-2 text-sm text-blue-200 shadow-[0_0_30px_rgba(37,99,235,0.12)]">
               <Sparkles className="h-4 w-4" />
@@ -110,9 +110,17 @@ export default function ServicesHero() {
               {/* outer premium frame */}
               <div className="relative rounded-[2.3rem] border border-white/10 bg-[#050b16]/90 p-4">
                 {/* top label bar */}
-                <div className="absolute left-1/2 -top-8 z-20 flex -translate-x-1/2 items-center gap-3 rounded-full border border-white/10 bg-[#07101d]/85 px-5 py-2 text-sm text-slate-200 backdrop-blur">
+                {/* Desktop floating top label */}
+                <div className="absolute left-1/2 -top-8 z-20 hidden -translate-x-1/2 items-center gap-3 rounded-full border border-white/10 bg-[#07101d]/85 px-5 py-2 text-sm text-slate-200 backdrop-blur xl:flex">
                   <span className="h-2 w-2 rounded-full bg-blue-400" />
                   Premium Service Showcase
+                </div>
+                {/* Mobile / tablet top label */}
+                <div className="mb-4 flex items-center justify-center xl:hidden">
+                  <div className="flex items-center gap-3 rounded-full border border-white/10 bg-[#07101d]/85 px-4 py-2 text-xs text-slate-200 backdrop-blur sm:text-sm">
+                    <span className="h-2 w-2 rounded-full bg-blue-400" />
+                    Premium Service Showcase
+                  </div>
                 </div>
 
                 {/* image block */}
@@ -129,16 +137,20 @@ export default function ServicesHero() {
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#020617]/45 via-transparent to-transparent" />
               </div>
 
+              {/* =========================
+                Desktop floating cards
+              ========================= */}
+
               {/* floating stat - top left */}
-              <div className="absolute -left-6 top-16 hidden rounded-[1.75rem] border border-white/10 bg-[#07101d]/88 px-5 py-4 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur md:block">
+              <div className="absolute -left-6 top-16 z-30 hidden rounded-[1.75rem] border border-white/10 bg-[#07101d]/88 px-5 py-4 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur xl:block">
                 <p className="text-3xl font-semibold text-white">50+</p>
                 <p className="mt-1 text-xs uppercase tracking-[0.32em] text-slate-300">
                   Projects <br /> Delivered
                 </p>
               </div>
 
-              {/* floating stat - right */} 
-              <div className="absolute -right-15 top-1/2 hidden -translate-y-1/2 rounded-[1.75rem] border border-white/10 bg-[#07101d]/88 px-5 py-4 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur md:block">
+              {/* floating stat - right */}
+              <div className="absolute -right-15 top-1/2 z-30 hidden -translate-y-1/2 rounded-[1.75rem] border border-white/10 bg-[#07101d]/88 px-5 py-4 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur xl:block">
                 <p className="text-3xl font-semibold text-white">20+</p>
                 <p className="mt-1 text-xs uppercase tracking-[0.32em] text-slate-300">
                   Happy <br /> Clients
@@ -146,7 +158,7 @@ export default function ServicesHero() {
               </div>
 
               {/* floating feature - bottom left */}
-              <div className="absolute -bottom-45 left-5 hidden max-w-[260px] rounded-[1.75rem] border border-white/10 bg-[#07101d]/90 p-5 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur lg:block">
+              <div className="absolute -bottom-45 left-5 z-30 hidden max-w-[260px] rounded-[1.75rem] border border-white/10 bg-[#07101d]/90 p-5 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur xl:block">
                 <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-500/15 text-blue-300">
                   <Sparkles className="h-5 w-5" />
                 </div>
@@ -160,7 +172,7 @@ export default function ServicesHero() {
               </div>
 
               {/* floating feature - bottom right */}
-              <div className="absolute -bottom-45 right-5 hidden max-w-[260px] rounded-[1.75rem] border border-white/10 bg-[#07101d]/90 p-5 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur lg:block">
+              <div className="absolute -bottom-45 right-5 z-30 hidden max-w-[260px] rounded-[1.75rem] border border-white/10 bg-[#07101d]/90 p-5 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur xl:block">
                 <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-500/15 text-blue-300">
                   <Briefcase className="h-5 w-5" />
                 </div>
@@ -171,6 +183,56 @@ export default function ServicesHero() {
                   ERP, CRM and custom workflow systems built to simplify
                   operations and support long-term business growth.
                 </p>
+              </div>
+
+              {/* =========================
+                Mobile / tablet cards
+                image container-ന്റെ പുറത്തായി ഇടുക
+              ========================= */}
+              <div className="mt-4 space-y-3 xl:hidden">
+                {/* stats row */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="rounded-[1.25rem] border border-white/10 bg-[#07101d]/88 px-4 py-4 text-center shadow-[0_20px_60px_rgba(0,0,0,0.25)] backdrop-blur">
+                    <p className="text-2xl font-semibold text-white">50+</p>
+                    <p className="mt-1 text-[10px] uppercase tracking-[0.2em] text-slate-300">
+                      Projects Delivered
+                    </p>
+                  </div>
+
+                  <div className="rounded-[1.25rem] border border-white/10 bg-[#07101d]/88 px-4 py-4 text-center shadow-[0_20px_60px_rgba(0,0,0,0.25)] backdrop-blur">
+                    <p className="text-2xl font-semibold text-white">20+</p>
+                    <p className="mt-1 text-[10px] uppercase tracking-[0.2em] text-slate-300">
+                      Happy Clients
+                    </p>
+                  </div>
+                </div>
+
+                {/* feature cards */}
+                <div className="rounded-[1.4rem] border border-white/10 bg-[#07101d]/90 p-4 shadow-[0_20px_60px_rgba(0,0,0,0.25)] backdrop-blur">
+                  <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-500/15 text-blue-300">
+                    <Sparkles className="h-5 w-5" />
+                  </div>
+                  <h4 className="text-lg font-semibold text-white">
+                    Conversion Focused
+                  </h4>
+                  <p className="mt-2 text-sm leading-7 text-slate-300">
+                    Modern UI, premium presentation and strong user experience crafted
+                    to attract and convert clients.
+                  </p>
+                </div>
+
+                <div className="rounded-[1.4rem] border border-white/10 bg-[#07101d]/90 p-4 shadow-[0_20px_60px_rgba(0,0,0,0.25)] backdrop-blur">
+                  <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-500/15 text-blue-300">
+                    <Briefcase className="h-5 w-5" />
+                  </div>
+                  <h4 className="text-lg font-semibold text-white">
+                    Business Systems
+                  </h4>
+                  <p className="mt-2 text-sm leading-7 text-slate-300">
+                    ERP, CRM and custom workflow systems built to simplify operations
+                    and support long-term business growth.
+                  </p>
+                </div>
               </div>
             </div>
           </div>

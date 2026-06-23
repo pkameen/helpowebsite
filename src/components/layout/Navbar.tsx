@@ -16,14 +16,14 @@ export default function Navbar() {
           {/* Logo */}
           <div className="flex items-center gap-3">
             <div className="flex items-center">
-            <Image
+              <Image
                 src="/logo/helpo-logo.png"
                 alt="HELPO Logo"
-                width={180}
-                height={60}
+                width={140}
+                height={45}
                 priority
-                className="h-auto w-auto" 
-            />
+                className="h-auto w-40 object-contain"
+              />
             </div>
           </div>
 

@@ -15,7 +15,7 @@ export default function Hero() {
   return (
     <section className="relative overflow-hidden pt-24 pb-28 md:pt-28 md:pb-36">
       {/* background glow layers */}
-      <div className="pointer-events-none absolute inset-0">
+      <div className="pointer-events-none absolute inset-0"> 
         <div className="absolute left-[-10%] top-10 h-72 w-72 rounded-full bg-blue-500/10 blur-3xl" />
         <div className="absolute right-[-8%] top-20 h-80 w-80 rounded-full bg-cyan-400/10 blur-3xl" />
         <div className="absolute bottom-0 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-blue-600/10 blur-3xl" />
@@ -123,6 +123,7 @@ export default function Hero() {
                   />
 
                 {/* LEFT STAT */}
+                {/* Desktop / xl stat cards */}
                 <div className="absolute -left-15 top-15 z-30 hidden rounded-[20px] border border-white/10 bg-[#081120]/90 px-5 py-4 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-xl xl:block">
                   <p className="text-3xl font-bold leading-none text-white">50+</p>
                   <p className="mt-2 text-[11px] uppercase tracking-[0.28em] text-slate-400">
@@ -130,7 +131,6 @@ export default function Hero() {
                   </p>
                 </div>
 
-                {/* RIGHT STAT */}
                 <div className="absolute -right-15 top-[48%] z-30 hidden -translate-y-1/2 rounded-[20px] border border-white/10 bg-[#081120]/90 px-5 py-4 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-xl xl:block">
                   <p className="text-3xl font-bold leading-none text-white">20+</p>
                   <p className="mt-2 text-[11px] uppercase tracking-[0.28em] text-slate-400">
@@ -138,6 +138,23 @@ export default function Hero() {
                   </p>
                 </div>
 
+                {/* Mobile / tablet stat cards */}
+                <div className="mt-4 grid grid-cols-2 gap-3 xl:hidden">
+                  <div className="rounded-[18px] border border-white/10 bg-[#081120]/90 px-4 py-3 text-center shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+                    <p className="text-2xl font-bold leading-none text-white">50+</p>
+                    <p className="mt-2 text-[10px] uppercase tracking-[0.2em] text-slate-400">
+                      Projects Delivered
+                    </p>
+                  </div>
+
+                  <div className="rounded-[18px] border border-white/10 bg-[#081120]/90 px-4 py-3 text-center shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+                    <p className="text-2xl font-bold leading-none text-white">20+</p>
+                    <p className="mt-2 text-[10px] uppercase tracking-[0.2em] text-slate-400">
+                      Happy Clients
+                    </p>
+                  </div>
+                </div>
+                
                 {/* BOTTOM FEATURE STRIP */}
                 <div className="absolute -bottom-35 left-1/2 z-30 hidden w-[90%] -translate-x-1/2 grid-cols-2 gap-4 lg:grid">
                   <div className="rounded-[22px] border border-white/10 bg-[#081120]/86 p-4 shadow-[0_20px_60px_rgba(0,0,0,0.42)] backdrop-blur-xl">
