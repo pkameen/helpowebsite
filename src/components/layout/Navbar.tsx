@@ -100,7 +100,7 @@ export default function Navbar() {
                 Contact
               </Link>
 
-              <Link href="/start-project" className="bg-blue-600 mt-4 py-3 rounded-xl text-white">
+              <Link href="#contact" className="bg-blue-600 mt-4 py-3 rounded-xl text-white">
                 Start Project
               </Link>
 
