@@ -56,7 +56,7 @@ export default function ServicesFAQ() {
           <p className="mt-5 text-lg leading-8 text-slate-300">
             Here are some common questions clients ask before starting a project
             with HELPO.
-          </p>
+          </p> 
         </div>
 
         {/* faq list */}
