@@ -14,7 +14,7 @@ import {
 const serviceTags = [
   {
     label: "Websites",
-    icon: Globe,
+    icon: Globe, 
   },
   {
     label: "Web Apps",
