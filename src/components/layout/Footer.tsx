@@ -139,7 +139,7 @@ export default function Footer() {
                 <div className="min-w-0">
                   <p className="text-sm font-medium text-white">Email</p>
                   <p className="mt-1 break-all text-sm leading-6 text-slate-400 transition-colors duration-300 group-hover:text-slate-300">
-                    helposoftwars@gmail.com
+                    helposoftwares@gmail.com
                   </p>
                 </div>
               </a>
