@@ -19,7 +19,7 @@ const quickLinks = [
 const serviceLinks = [
   "Website Development",
   "Web Applications",
-  "Ecommerce Solutions",
+  "Ecommerce Solutions", 
   "ERP Systems",
   "CRM Systems",
 ];
@@ -129,7 +129,7 @@ export default function Footer() {
             <div className="mt-6 space-y-4">
               {/* Email */}
               <a
-                href="mailto:helposoftwars@gmail.com"
+                href="mailto:helposoftwares@gmail.com"
                 className="group flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-sm transition-all duration-300 hover:border-blue-500/30 hover:bg-white/[0.06]"
               >
                 <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-blue-500/20 bg-blue-500/10 text-blue-400 shadow-[0_0_20px_rgba(59,130,246,0.12)]">

@@ -5,7 +5,7 @@ import {
   MessageCircle,
   Mail,
   Phone,
-  ChevronDown,
+  ChevronDown, 
   Send,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -160,7 +160,7 @@ export default function Contact() {
                   </p>
                   <p className="flex items-center gap-2 break-all">
                     <Mail className="h-4 w-4 text-blue-400" />
-                    hello@helpo.in
+                    helposoftwares@gmail.com 
                   </p>
                 </div>
               </div>
